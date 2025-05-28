@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Calendar, MapPin, Star, Ticket, User, CreditCard, Sparkles, TrendingUp, Filter, Search } from 'lucide-react';
+import { Calendar, MapPin, Star, Ticket, User, CreditCard, Sparkles, TrendingUp, Filter, Search, BarChart3, Users, Settings as SettingsIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
+import { Link } from 'react-router-dom';
 import { EventCard } from '../components/EventCard';
 import { TicketSelector } from '../components/TicketSelector';
 import { CheckoutForm } from '../components/CheckoutForm';
@@ -172,6 +173,42 @@ const Index = () => {
                   <Calendar className="w-4 h-4" />
                   Events
                 </Button>
+                <Link to="/dashboard">
+                  <Button
+                    variant="ghost"
+                    className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
+                  >
+                    <BarChart3 className="w-4 h-4" />
+                    Dashboard
+                  </Button>
+                </Link>
+                <Link to="/bookings">
+                  <Button
+                    variant="ghost"
+                    className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
+                  >
+                    <Users className="w-4 h-4" />
+                    Bookings
+                  </Button>
+                </Link>
+                <Link to="/profile">
+                  <Button
+                    variant="ghost"
+                    className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
+                  >
+                    <User className="w-4 h-4" />
+                    Profile
+                  </Button>
+                </Link>
+                <Link to="/settings">
+                  <Button
+                    variant="ghost"
+                    className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
+                  >
+                    <SettingsIcon className="w-4 h-4" />
+                    Settings
+                  </Button>
+                </Link>
                 <Button
                   variant={currentState === 'orders' ? 'default' : 'ghost'}
                   onClick={() => setCurrentState('orders')}
@@ -432,7 +469,7 @@ const Index = () => {
 
       {/* Enhanced Mobile Navigation */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur border-t border-festival-200 dark:border-gray-700 z-50">
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-5">
           <Button
             variant={currentState === 'events' ? 'default' : 'ghost'}
             onClick={resetToEvents}
@@ -441,12 +478,30 @@ const Index = () => {
             <Calendar className="w-5 h-5" />
             <span className="text-xs">Events</span>
           </Button>
+          <Link to="/dashboard" className="flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 p-0">
+            <Button variant="ghost" className="flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 w-full">
+              <BarChart3 className="w-5 h-5" />
+              <span className="text-xs">Dashboard</span>
+            </Button>
+          </Link>
+          <Link to="/bookings" className="flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 p-0">
+            <Button variant="ghost" className="flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 w-full">
+              <Users className="w-5 h-5" />
+              <span className="text-xs">Bookings</span>
+            </Button>
+          </Link>
+          <Link to="/profile" className="flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 p-0">
+            <Button variant="ghost" className="flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 w-full">
+              <User className="w-5 h-5" />
+              <span className="text-xs">Profile</span>
+            </Button>
+          </Link>
           <Button
             variant={currentState === 'orders' ? 'default' : 'ghost'}
             onClick={() => setCurrentState('orders')}
             className="flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200"
           >
-            <User className="w-5 h-5" />
+            <SettingsIcon className="w-5 h-5" />
             <span className="text-xs">Orders</span>
           </Button>
         </div>
