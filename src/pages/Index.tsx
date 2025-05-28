@@ -172,6 +172,21 @@ const Index = () => {
           <div className="space-y-12 animate-fade-in">
             <HeroSection />
             
+            {/* Quick Navigation to Events Page */}
+            <div className="text-center space-y-4">
+              <Button 
+                onClick={() => navigate('/events')}
+                size="lg"
+                className="festival-gradient text-white text-lg px-8 py-4 hover:scale-105 transition-transform duration-200"
+              >
+                <Calendar className="w-5 h-5 mr-2" />
+                Explore All Events
+              </Button>
+              <p className="text-muted-foreground">
+                Visit our comprehensive Events Hub for detailed browsing and management
+              </p>
+            </div>
+            
             <SearchAndFilter
               searchTerm={searchTerm}
               onSearchChange={setSearchTerm}

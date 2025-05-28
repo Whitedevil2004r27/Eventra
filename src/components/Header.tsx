@@ -2,7 +2,7 @@
 import { Calendar, BarChart3, Users, User, Settings as SettingsIcon, Ticket, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ThemeToggle } from './ThemeToggle';
 
 interface HeaderProps {
@@ -12,11 +12,19 @@ interface HeaderProps {
 }
 
 export const Header = ({ currentState, onEventsClick, onOrdersClick }: HeaderProps) => {
+  const location = useLocation();
+
+  const isActive = (path: string) => {
+    if (path === '/' && location.pathname === '/') return true;
+    if (path !== '/' && location.pathname.startsWith(path)) return true;
+    return false;
+  };
+
   return (
     <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg shadow-sm border-b border-festival-200 dark:border-gray-700 sticky top-0 z-50 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-200">
             <div className="w-10 h-10 bg-gradient-to-br from-festival-500 to-festival-600 rounded-xl flex items-center justify-center shadow-lg animate-pulse-glow">
               <Ticket className="w-6 h-6 text-white" />
             </div>
@@ -25,21 +33,31 @@ export const Header = ({ currentState, onEventsClick, onOrdersClick }: HeaderPro
               <Sparkles className="w-3 h-3 mr-1" />
               Premium
             </Badge>
-          </div>
+          </Link>
           
           <div className="flex items-center gap-4">
             <nav className="hidden md:flex items-center gap-6">
-              <Button
-                variant={currentState === 'events' ? 'default' : 'ghost'}
-                onClick={onEventsClick}
-                className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
-              >
-                <Calendar className="w-4 h-4" />
-                Events
-              </Button>
+              <Link to="/">
+                <Button
+                  variant={isActive('/') ? 'default' : 'ghost'}
+                  className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
+                >
+                  <Calendar className="w-4 h-4" />
+                  Home
+                </Button>
+              </Link>
+              <Link to="/events">
+                <Button
+                  variant={isActive('/events') ? 'default' : 'ghost'}
+                  className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
+                >
+                  <Calendar className="w-4 h-4" />
+                  Events
+                </Button>
+              </Link>
               <Link to="/dashboard">
                 <Button
-                  variant="ghost"
+                  variant={isActive('/dashboard') ? 'default' : 'ghost'}
                   className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
                 >
                   <BarChart3 className="w-4 h-4" />
@@ -48,7 +66,7 @@ export const Header = ({ currentState, onEventsClick, onOrdersClick }: HeaderPro
               </Link>
               <Link to="/bookings">
                 <Button
-                  variant="ghost"
+                  variant={isActive('/bookings') ? 'default' : 'ghost'}
                   className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
                 >
                   <Users className="w-4 h-4" />
@@ -57,7 +75,7 @@ export const Header = ({ currentState, onEventsClick, onOrdersClick }: HeaderPro
               </Link>
               <Link to="/profile">
                 <Button
-                  variant="ghost"
+                  variant={isActive('/profile') ? 'default' : 'ghost'}
                   className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
                 >
                   <User className="w-4 h-4" />
@@ -66,21 +84,13 @@ export const Header = ({ currentState, onEventsClick, onOrdersClick }: HeaderPro
               </Link>
               <Link to="/settings">
                 <Button
-                  variant="ghost"
+                  variant={isActive('/settings') ? 'default' : 'ghost'}
                   className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
                 >
                   <SettingsIcon className="w-4 h-4" />
                   Settings
                 </Button>
               </Link>
-              <Button
-                variant={currentState === 'orders' ? 'default' : 'ghost'}
-                onClick={onOrdersClick}
-                className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
-              >
-                <User className="w-4 h-4" />
-                My Orders
-              </Button>
             </nav>
             <ThemeToggle />
           </div>
