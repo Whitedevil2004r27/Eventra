@@ -1,10 +1,10 @@
-
 import { Calendar, MapPin, Clock, Star, Heart, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Event } from '../types';
 import { useState } from 'react';
+import { Ticket } from "@/types/ticket";
 
 interface EventCardProps {
   event: Event;
