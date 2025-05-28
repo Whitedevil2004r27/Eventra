@@ -9,6 +9,7 @@ import { SearchAndFilter } from '../components/SearchAndFilter';
 import { EventsGrid } from '../components/EventsGrid';
 import { MobileNavigation } from '../components/MobileNavigation';
 import { TicketSelector } from '../components/TicketSelector';
+import { SeatSelector } from '../components/SeatSelector';
 import { CheckoutForm } from '../components/CheckoutForm';
 import { PaymentSuccess } from '../components/PaymentSuccess';
 import { PaymentFailure } from '../components/PaymentFailure';
@@ -17,12 +18,13 @@ import { events, ticketTypes } from '../data/events';
 import { CartItem, PaymentFormData, Order } from '../types';
 import { useToast } from '@/hooks/use-toast';
 
-type AppState = 'events' | 'ticket-selection' | 'checkout' | 'success' | 'failure' | 'orders';
+type AppState = 'events' | 'ticket-selection' | 'seat-selection' | 'checkout' | 'success' | 'failure' | 'orders';
 
 const Index = () => {
   const [currentState, setCurrentState] = useState<AppState>('events');
   const [selectedEventId, setSelectedEventId] = useState<string>('');
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [selectedSeats, setSelectedSeats] = useState<any[]>([]);
   const [currentOrder, setCurrentOrder] = useState<Order | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -44,6 +46,7 @@ const Index = () => {
     setSelectedEventId(eventId);
     setCurrentState('ticket-selection');
     setCartItems([]);
+    setSelectedSeats([]);
   };
 
   const handleTicketSelection = (selections: Record<string, number>) => {
@@ -71,7 +74,7 @@ const Index = () => {
     setCartItems(items);
   };
 
-  const proceedToCheckout = () => {
+  const proceedToSeatSelection = () => {
     if (cartItems.length === 0) {
       toast({
         title: "No tickets selected",
@@ -80,6 +83,14 @@ const Index = () => {
       });
       return;
     }
+    setCurrentState('seat-selection');
+  };
+
+  const handleSeatSelection = (seats: any[]) => {
+    setSelectedSeats(seats);
+  };
+
+  const proceedToCheckout = () => {
     setCurrentState('checkout');
   };
 
@@ -139,6 +150,7 @@ const Index = () => {
     setCurrentState('events');
     setSelectedEventId('');
     setCartItems([]);
+    setSelectedSeats([]);
     setCurrentOrder(null);
   };
 
@@ -224,6 +236,36 @@ const Index = () => {
                     </div>
                   </div>
                   <Button 
+                    onClick={proceedToSeatSelection} 
+                    className="w-full festival-gradient text-white h-12 text-lg font-semibold hover:scale-105 transition-transform duration-200"
+                  >
+                    Continue to Seat Selection
+                  </Button>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        )}
+
+        {currentState === 'seat-selection' && selectedEvent && (
+          <div className="max-w-6xl mx-auto space-y-6 animate-fade-in">
+            <div className="flex items-center gap-4 mb-6">
+              <Button variant="outline" onClick={() => setCurrentState('ticket-selection')} className="hover:scale-105 transition-transform duration-200">
+                ← Back to Tickets
+              </Button>
+              <h2 className="text-4xl font-bold text-gray-900 dark:text-white">Select Your Seats</h2>
+            </div>
+
+            <SeatSelector
+              eventTitle={selectedEvent.title}
+              onSeatSelection={handleSeatSelection}
+              maxSeats={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+            />
+
+            {selectedSeats.length > 0 && (
+              <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur border-festival-200 dark:border-gray-700">
+                <CardContent className="pt-6">
+                  <Button 
                     onClick={proceedToCheckout} 
                     className="w-full festival-gradient text-white h-12 text-lg font-semibold hover:scale-105 transition-transform duration-200"
                   >
@@ -238,8 +280,8 @@ const Index = () => {
         {currentState === 'checkout' && (
           <div className="max-w-6xl mx-auto space-y-6 animate-fade-in">
             <div className="flex items-center gap-4 mb-6">
-              <Button variant="outline" onClick={() => setCurrentState('ticket-selection')} className="hover:scale-105 transition-transform duration-200">
-                ← Back to Tickets
+              <Button variant="outline" onClick={() => setCurrentState('seat-selection')} className="hover:scale-105 transition-transform duration-200">
+                ← Back to Seats
               </Button>
               <h2 className="text-4xl font-bold text-gray-900 dark:text-white">Checkout</h2>
             </div>
