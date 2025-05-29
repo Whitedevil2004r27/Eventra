@@ -1,7 +1,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Button } from '@/components/ui/button';
 import {
   BarChart,
   Bar,
@@ -9,6 +10,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
+  Legend,
   ResponsiveContainer,
   LineChart,
   Line,
@@ -18,36 +20,35 @@ import {
 } from 'recharts';
 import {
   TrendingUp,
+  TrendingDown,
   Users,
   Calendar,
   DollarSign,
-  Download,
-  Eye,
   Ticket,
-  Target,
+  Download,
 } from 'lucide-react';
 
-const revenueData = [
-  { month: 'Jan', revenue: 4000, bookings: 240 },
-  { month: 'Feb', revenue: 3000, bookings: 198 },
-  { month: 'Mar', revenue: 5000, bookings: 300 },
-  { month: 'Apr', revenue: 4500, bookings: 278 },
-  { month: 'May', revenue: 6000, bookings: 389 },
-  { month: 'Jun', revenue: 5500, bookings: 349 },
+const monthlyData = [
+  { month: 'Jan', bookings: 65, revenue: 4500 },
+  { month: 'Feb', bookings: 59, revenue: 3200 },
+  { month: 'Mar', bookings: 80, revenue: 5400 },
+  { month: 'Apr', bookings: 81, revenue: 6200 },
+  { month: 'May', bookings: 56, revenue: 4100 },
+  { month: 'Jun', bookings: 55, revenue: 3800 },
 ];
 
-const eventPopularityData = [
-  { name: 'Music Events', value: 40, color: '#8b5cf6' },
-  { name: 'Tech Conferences', value: 30, color: '#06b6d4' },
-  { name: 'Art Shows', value: 20, color: '#10b981' },
-  { name: 'Sports Events', value: 10, color: '#f59e0b' },
+const eventTypeData = [
+  { name: 'Music', value: 45, color: '#8884d8' },
+  { name: 'Tech', value: 25, color: '#82ca9d' },
+  { name: 'Art', value: 20, color: '#ffc658' },
+  { name: 'Sports', value: 10, color: '#ff7c7c' },
 ];
 
-const topEventsData = [
-  { name: 'Summer Music Fest', bookings: 450, revenue: 22500 },
-  { name: 'Tech Summit 2024', bookings: 320, revenue: 19200 },
-  { name: 'Art Gallery Night', bookings: 280, revenue: 8400 },
-  { name: 'Sports Championship', bookings: 380, revenue: 15200 },
+const topEvents = [
+  { name: 'Summer Music Festival', bookings: 145, revenue: 12500 },
+  { name: 'Tech Conference 2024', bookings: 89, revenue: 8900 },
+  { name: 'Art Gallery Opening', bookings: 67, revenue: 3350 },
+  { name: 'Basketball Championship', bookings: 234, revenue: 15600 },
 ];
 
 export default function Analytics() {
@@ -69,86 +70,73 @@ export default function Analytics() {
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">$28,500</div>
-            <p className="text-xs text-muted-foreground">
-              <Badge variant="secondary" className="text-green-600">
-                <TrendingUp className="w-3 h-3 mr-1" />
-                +12.5%
-              </Badge>
-              from last month
-            </p>
+            <div className="text-2xl font-bold">$45,231</div>
+            <div className="flex items-center text-xs text-muted-foreground">
+              <TrendingUp className="h-3 w-3 text-green-500 mr-1" />
+              +20.1% from last month
+            </div>
           </CardContent>
         </Card>
-
+        
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Bookings</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <Ticket className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">1,430</div>
-            <p className="text-xs text-muted-foreground">
-              <Badge variant="secondary" className="text-green-600">
-                <TrendingUp className="w-3 h-3 mr-1" />
-                +8.2%
-              </Badge>
-              from last month
-            </p>
+            <div className="text-2xl font-bold">2,350</div>
+            <div className="flex items-center text-xs text-muted-foreground">
+              <TrendingUp className="h-3 w-3 text-green-500 mr-1" />
+              +15.3% from last month
+            </div>
           </CardContent>
         </Card>
-
+        
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Active Events</CardTitle>
             <Calendar className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">24</div>
-            <p className="text-xs text-muted-foreground">
-              <Badge variant="secondary" className="text-blue-600">
-                <Eye className="w-3 h-3 mr-1" />
-                6 upcoming
-              </Badge>
-              this week
-            </p>
+            <div className="text-2xl font-bold">12</div>
+            <div className="flex items-center text-xs text-muted-foreground">
+              <TrendingDown className="h-3 w-3 text-red-500 mr-1" />
+              -2.5% from last month
+            </div>
           </CardContent>
         </Card>
-
+        
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Conversion Rate</CardTitle>
-            <Target className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Unique Customers</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">24.5%</div>
-            <p className="text-xs text-muted-foreground">
-              <Badge variant="secondary" className="text-green-600">
-                <TrendingUp className="w-3 h-3 mr-1" />
-                +2.1%
-              </Badge>
-              from last month
-            </p>
+            <div className="text-2xl font-bold">1,245</div>
+            <div className="flex items-center text-xs text-muted-foreground">
+              <TrendingUp className="h-3 w-3 text-green-500 mr-1" />
+              +12.8% from last month
+            </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Charts */}
+      {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Revenue & Bookings Trend</CardTitle>
+            <CardTitle>Monthly Booking Trends</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={revenueData}>
+              <LineChart data={monthlyData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
-                <YAxis yAxisId="left" />
-                <YAxis yAxisId="right" orientation="right" />
+                <YAxis />
                 <Tooltip />
-                <Bar yAxisId="left" dataKey="revenue" fill="#8b5cf6" name="Revenue ($)" />
-                <Bar yAxisId="right" dataKey="bookings" fill="#06b6d4" name="Bookings" />
-              </BarChart>
+                <Legend />
+                <Line type="monotone" dataKey="bookings" stroke="#8884d8" strokeWidth={2} />
+              </LineChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
@@ -161,15 +149,16 @@ export default function Analytics() {
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
-                  data={eventPopularityData}
+                  data={eventTypeData}
                   cx="50%"
                   cy="50%"
+                  labelLine={false}
+                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                   outerRadius={80}
                   fill="#8884d8"
                   dataKey="value"
-                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                 >
-                  {eventPopularityData.map((entry, index) => (
+                  {eventTypeData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
@@ -180,35 +169,46 @@ export default function Analytics() {
         </Card>
       </div>
 
-      {/* Top Events Table */}
+      {/* Revenue Chart */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Monthly Revenue</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart data={monthlyData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="revenue" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+
+      {/* Top Events */}
       <Card>
         <CardHeader>
           <CardTitle>Top Performing Events</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {topEventsData.map((event, index) => (
+            {topEvents.map((event, index) => (
               <div key={event.name} className="flex items-center justify-between p-4 border rounded-lg">
                 <div className="flex items-center gap-4">
-                  <div className="w-8 h-8 bg-festival-500 text-white rounded-full flex items-center justify-center font-bold">
+                  <Badge variant="outline" className="w-8 h-8 rounded-full flex items-center justify-center">
                     {index + 1}
-                  </div>
+                  </Badge>
                   <div>
-                    <h3 className="font-semibold">{event.name}</h3>
-                    <p className="text-sm text-gray-500">
-                      {event.bookings} bookings • ${event.revenue} revenue
-                    </p>
+                    <h3 className="font-medium">{event.name}</h3>
+                    <p className="text-sm text-gray-500">{event.bookings} bookings</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline">
-                    <Ticket className="w-3 h-3 mr-1" />
-                    {event.bookings}
-                  </Badge>
-                  <Badge variant="secondary">
-                    <DollarSign className="w-3 h-3 mr-1" />
-                    ${event.revenue}
-                  </Badge>
+                <div className="text-right">
+                  <div className="font-semibold">${event.revenue}</div>
+                  <Progress value={(event.bookings / 250) * 100} className="w-20 mt-1" />
                 </div>
               </div>
             ))}
