@@ -1,57 +1,72 @@
 
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Calendar, MapPin, Clock, Upload } from "lucide-react";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Calendar, Clock, MapPin, Upload, Save } from 'lucide-react';
+import { toast } from 'sonner';
 
-const CreateEvent = () => {
+export default function CreateEvent() {
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    date: "",
-    time: "",
-    venue: "",
+    title: '',
+    description: '',
+    date: '',
+    time: '',
+    venue: '',
     image: null as File | null,
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFormData({
-        ...formData,
-        image: e.target.files[0],
-      });
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFormData(prev => ({ ...prev, image: file }));
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Creating event:", formData);
-    // Handle form submission logic here
+    setIsSubmitting(true);
+
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      toast.success('Event created successfully!');
+      
+      // Reset form
+      setFormData({
+        title: '',
+        description: '',
+        date: '',
+        time: '',
+        venue: '',
+        image: null,
+      });
+    } catch (error) {
+      toast.error('Failed to create event. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto space-y-6 animate-fade-in">
-      <div className="space-y-2">
-        <h1 className="text-4xl font-bold gradient-text">Create New Event</h1>
-        <p className="text-muted-foreground text-lg">
-          Fill in the details below to create a new event for your festival.
-        </p>
+    <div className="max-w-4xl mx-auto space-y-6">
+      <div className="flex items-center gap-3">
+        <h1 className="text-3xl font-bold">Create New Event</h1>
       </div>
 
-      <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur border-festival-200 dark:border-gray-700">
+      <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-2xl">
-            <Calendar className="w-6 h-6 text-festival-500" />
+          <CardTitle className="flex items-center gap-2">
+            <Calendar className="w-5 h-5" />
             Event Details
           </CardTitle>
         </CardHeader>
@@ -59,56 +74,54 @@ const CreateEvent = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="title">Event Title</Label>
+                <Label htmlFor="title">Event Title *</Label>
                 <Input
                   id="title"
-                  name="title"
-                  value={formData.title}
-                  onChange={handleInputChange}
+                  type="text"
                   placeholder="Enter event title"
+                  value={formData.title}
+                  onChange={(e) => handleInputChange('title', e.target.value)}
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="venue">Venue</Label>
+                <Label htmlFor="venue">Venue *</Label>
                 <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                   <Input
                     id="venue"
-                    name="venue"
-                    value={formData.venue}
-                    onChange={handleInputChange}
+                    type="text"
                     placeholder="Enter venue location"
                     className="pl-10"
+                    value={formData.venue}
+                    onChange={(e) => handleInputChange('venue', e.target.value)}
                     required
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="date">Event Date</Label>
+                <Label htmlFor="date">Event Date *</Label>
                 <Input
                   id="date"
-                  name="date"
                   type="date"
                   value={formData.date}
-                  onChange={handleInputChange}
+                  onChange={(e) => handleInputChange('date', e.target.value)}
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="time">Event Time</Label>
+                <Label htmlFor="time">Event Time *</Label>
                 <div className="relative">
-                  <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                   <Input
                     id="time"
-                    name="time"
                     type="time"
-                    value={formData.time}
-                    onChange={handleInputChange}
                     className="pl-10"
+                    value={formData.time}
+                    onChange={(e) => handleInputChange('time', e.target.value)}
                     required
                   />
                 </div>
@@ -116,42 +129,43 @@ const CreateEvent = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">Event Description</Label>
+              <Label htmlFor="description">Event Description *</Label>
               <Textarea
                 id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-                placeholder="Describe your event..."
+                placeholder="Provide a detailed description of the event"
                 rows={4}
+                value={formData.description}
+                onChange={(e) => handleInputChange('description', e.target.value)}
                 required
               />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="image">Event Image</Label>
-              <div className="border-2 border-dashed border-festival-200 dark:border-gray-600 rounded-lg p-6 text-center">
-                <Upload className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
-                <Input
+              <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center">
+                <input
                   id="image"
-                  name="image"
                   type="file"
                   accept="image/*"
-                  onChange={handleImageChange}
-                  className="max-w-xs mx-auto"
+                  onChange={handleImageUpload}
+                  className="hidden"
                 />
-                <p className="text-sm text-muted-foreground mt-2">
-                  Upload an image for your event (JPG, PNG)
-                </p>
+                <label htmlFor="image" className="cursor-pointer">
+                  <Upload className="w-12 h-12 mx-auto text-gray-400 mb-4" />
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    {formData.image ? formData.image.name : 'Click to upload event image'}
+                  </p>
+                  <p className="text-xs text-gray-500 mt-2">
+                    PNG, JPG, GIF up to 10MB
+                  </p>
+                </label>
               </div>
             </div>
 
             <div className="flex gap-4 pt-4">
-              <Button
-                type="submit"
-                className="festival-gradient text-white hover:scale-105 transition-transform duration-200"
-              >
-                Create Event
+              <Button type="submit" disabled={isSubmitting} className="flex items-center gap-2">
+                <Save className="w-4 h-4" />
+                {isSubmitting ? 'Creating Event...' : 'Create Event'}
               </Button>
               <Button type="button" variant="outline">
                 Save as Draft
@@ -162,6 +176,4 @@ const CreateEvent = () => {
       </Card>
     </div>
   );
-};
-
-export default CreateEvent;
+}

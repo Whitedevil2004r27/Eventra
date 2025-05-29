@@ -1,166 +1,220 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { BarChart3, TrendingUp, Users, DollarSign, Calendar, Eye } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  PieChart,
+  Pie,
+  Cell,
+} from 'recharts';
+import {
+  TrendingUp,
+  Users,
+  Calendar,
+  DollarSign,
+  Download,
+  Eye,
+  Ticket,
+  Target,
+} from 'lucide-react';
 
-const Analytics = () => {
-  // Mock analytics data
-  const metrics = [
-    {
-      title: "Total Events",
-      value: "24",
-      change: "+12%",
-      trend: "up",
-      icon: Calendar,
-      color: "blue",
-    },
-    {
-      title: "Total Bookings",
-      value: "1,847",
-      change: "+23%",
-      trend: "up",
-      icon: Users,
-      color: "green",
-    },
-    {
-      title: "Revenue",
-      value: "$47,832",
-      change: "+18%",
-      trend: "up",
-      icon: DollarSign,
-      color: "purple",
-    },
-    {
-      title: "Page Views",
-      value: "12,456",
-      change: "+8%",
-      trend: "up",
-      icon: Eye,
-      color: "orange",
-    },
-  ];
+const revenueData = [
+  { month: 'Jan', revenue: 4000, bookings: 240 },
+  { month: 'Feb', revenue: 3000, bookings: 198 },
+  { month: 'Mar', revenue: 5000, bookings: 300 },
+  { month: 'Apr', revenue: 4500, bookings: 278 },
+  { month: 'May', revenue: 6000, bookings: 389 },
+  { month: 'Jun', revenue: 5500, bookings: 349 },
+];
 
-  const topEvents = [
-    { name: "Summer Music Festival", bookings: 456, revenue: "$12,800" },
-    { name: "Tech Innovation Conference", bookings: 234, revenue: "$8,900" },
-    { name: "Food & Wine Expo", bookings: 189, revenue: "$6,450" },
-    { name: "Art & Culture Fair", bookings: 167, revenue: "$5,200" },
-  ];
+const eventPopularityData = [
+  { name: 'Music Events', value: 40, color: '#8b5cf6' },
+  { name: 'Tech Conferences', value: 30, color: '#06b6d4' },
+  { name: 'Art Shows', value: 20, color: '#10b981' },
+  { name: 'Sports Events', value: 10, color: '#f59e0b' },
+];
 
-  const recentActivity = [
-    { action: "New booking", event: "Summer Music Festival", time: "2 mins ago" },
-    { action: "Event created", event: "Winter Sports Meet", time: "15 mins ago" },
-    { action: "Payment received", event: "Tech Conference", time: "1 hour ago" },
-    { action: "New user registered", event: "Platform", time: "2 hours ago" },
-  ];
+const topEventsData = [
+  { name: 'Summer Music Fest', bookings: 450, revenue: 22500 },
+  { name: 'Tech Summit 2024', bookings: 320, revenue: 19200 },
+  { name: 'Art Gallery Night', bookings: 280, revenue: 8400 },
+  { name: 'Sports Championship', bookings: 380, revenue: 15200 },
+];
 
+export default function Analytics() {
   return (
-    <div className="p-6 space-y-6 animate-fade-in">
-      <div className="space-y-2">
-        <h1 className="text-4xl font-bold gradient-text">Analytics Report</h1>
-        <p className="text-muted-foreground text-lg">
-          Track your event performance and booking analytics.
-        </p>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold">Analytics Report</h1>
+        <Button className="flex items-center gap-2">
+          <Download className="w-4 h-4" />
+          Export Report
+        </Button>
       </div>
 
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {metrics.map((metric) => (
-          <Card key={metric.title} className="bg-white/80 dark:bg-gray-800/80 backdrop-blur border-festival-200 dark:border-gray-700 hover:scale-105 transition-transform duration-200">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                {metric.title}
-              </CardTitle>
-              <metric.icon className="h-4 w-4 text-festival-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{metric.value}</div>
-              <div className="flex items-center gap-1 text-sm">
-                <TrendingUp className="h-3 w-3 text-green-500" />
-                <span className="text-green-500">{metric.change}</span>
-                <span className="text-muted-foreground">from last month</span>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+            <DollarSign className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">$28,500</div>
+            <p className="text-xs text-muted-foreground">
+              <Badge variant="secondary" className="text-green-600">
+                <TrendingUp className="w-3 h-3 mr-1" />
+                +12.5%
+              </Badge>
+              from last month
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Bookings</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">1,430</div>
+            <p className="text-xs text-muted-foreground">
+              <Badge variant="secondary" className="text-green-600">
+                <TrendingUp className="w-3 h-3 mr-1" />
+                +8.2%
+              </Badge>
+              from last month
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Active Events</CardTitle>
+            <Calendar className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">24</div>
+            <p className="text-xs text-muted-foreground">
+              <Badge variant="secondary" className="text-blue-600">
+                <Eye className="w-3 h-3 mr-1" />
+                6 upcoming
+              </Badge>
+              this week
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Conversion Rate</CardTitle>
+            <Target className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">24.5%</div>
+            <p className="text-xs text-muted-foreground">
+              <Badge variant="secondary" className="text-green-600">
+                <TrendingUp className="w-3 h-3 mr-1" />
+                +2.1%
+              </Badge>
+              from last month
+            </p>
+          </CardContent>
+        </Card>
       </div>
 
+      {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Top Events */}
-        <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur border-festival-200 dark:border-gray-700">
+        <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-xl">
-              <BarChart3 className="w-5 h-5 text-festival-500" />
-              Top Performing Events
-            </CardTitle>
+            <CardTitle>Revenue & Bookings Trend</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {topEvents.map((event, index) => (
-                <div key={event.name} className="flex items-center justify-between p-3 bg-festival-50 dark:bg-gray-700 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <Badge variant="secondary" className="w-6 h-6 rounded-full flex items-center justify-center text-xs">
-                      {index + 1}
-                    </Badge>
-                    <div>
-                      <p className="font-medium">{event.name}</p>
-                      <p className="text-sm text-muted-foreground">{event.bookings} bookings</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-bold text-festival-600 dark:text-festival-400">{event.revenue}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={revenueData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis yAxisId="left" />
+                <YAxis yAxisId="right" orientation="right" />
+                <Tooltip />
+                <Bar yAxisId="left" dataKey="revenue" fill="#8b5cf6" name="Revenue ($)" />
+                <Bar yAxisId="right" dataKey="bookings" fill="#06b6d4" name="Bookings" />
+              </BarChart>
+            </ResponsiveContainer>
           </CardContent>
         </Card>
 
-        {/* Recent Activity */}
-        <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur border-festival-200 dark:border-gray-700">
+        <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-xl">
-              <TrendingUp className="w-5 h-5 text-festival-500" />
-              Recent Activity
-            </CardTitle>
+            <CardTitle>Event Categories</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {recentActivity.map((activity, index) => (
-                <div key={index} className="flex items-center gap-3 p-3 bg-festival-50 dark:bg-gray-700 rounded-lg">
-                  <div className="w-2 h-2 bg-festival-500 rounded-full"></div>
-                  <div className="flex-1">
-                    <p className="font-medium">{activity.action}</p>
-                    <p className="text-sm text-muted-foreground">{activity.event}</p>
-                  </div>
-                  <div className="text-xs text-muted-foreground">{activity.time}</div>
-                </div>
-              ))}
-            </div>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={eventPopularityData}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                >
+                  {eventPopularityData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
           </CardContent>
         </Card>
       </div>
 
-      {/* Charts Placeholder */}
-      <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur border-festival-200 dark:border-gray-700">
+      {/* Top Events Table */}
+      <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-xl">
-            <BarChart3 className="w-5 h-5 text-festival-500" />
-            Booking Trends
-          </CardTitle>
+          <CardTitle>Top Performing Events</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="h-64 flex items-center justify-center border-2 border-dashed border-festival-200 dark:border-gray-600 rounded-lg">
-            <div className="text-center text-muted-foreground">
-              <BarChart3 className="w-12 h-12 mx-auto mb-2" />
-              <p>Chart visualization will be implemented here</p>
-              <p className="text-sm">Integration with charts library like Recharts</p>
-            </div>
+          <div className="space-y-4">
+            {topEventsData.map((event, index) => (
+              <div key={event.name} className="flex items-center justify-between p-4 border rounded-lg">
+                <div className="flex items-center gap-4">
+                  <div className="w-8 h-8 bg-festival-500 text-white rounded-full flex items-center justify-center font-bold">
+                    {index + 1}
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">{event.name}</h3>
+                    <p className="text-sm text-gray-500">
+                      {event.bookings} bookings • ${event.revenue} revenue
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Badge variant="outline">
+                    <Ticket className="w-3 h-3 mr-1" />
+                    {event.bookings}
+                  </Badge>
+                  <Badge variant="secondary">
+                    <DollarSign className="w-3 h-3 mr-1" />
+                    ${event.revenue}
+                  </Badge>
+                </div>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>
     </div>
   );
-};
-
-export default Analytics;
+}

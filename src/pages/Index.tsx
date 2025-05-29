@@ -3,9 +3,11 @@ import { CreditCard, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
+import { Header } from '../components/Header';
 import { HeroSection } from '../components/HeroSection';
 import { SearchAndFilter } from '../components/SearchAndFilter';
 import { EventsGrid } from '../components/EventsGrid';
+import { MobileNavigation } from '../components/MobileNavigation';
 import { TicketSelector } from '../components/TicketSelector';
 import { SeatSelector } from '../components/SeatSelector';
 import { CheckoutForm } from '../components/CheckoutForm';
@@ -159,8 +161,14 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-festival-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-purple-950 dark:to-gray-900 transition-colors duration-300">
+      <Header 
+        currentState={currentState}
+        onEventsClick={resetToEvents}
+        onOrdersClick={() => setCurrentState('orders')}
+      />
+
       {/* Main Content */}
-      <main className="p-6">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {currentState === 'events' && (
           <div className="space-y-12 animate-fade-in">
             <HeroSection />
@@ -331,6 +339,12 @@ const Index = () => {
           </div>
         )}
       </main>
+
+      <MobileNavigation
+        currentState={currentState}
+        onEventsClick={resetToEvents}
+        onOrdersClick={() => setCurrentState('orders')}
+      />
     </div>
   );
 };

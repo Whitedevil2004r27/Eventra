@@ -1,83 +1,152 @@
 
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Users, Search, Filter, Download } from "lucide-react";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Search, Filter, Download, Users, Calendar, DollarSign } from 'lucide-react';
 
-const ViewBookings = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+const mockBookings = [
+  {
+    id: 'BK001',
+    eventName: 'Summer Music Festival',
+    customerName: 'John Doe',
+    email: 'john@example.com',
+    tickets: 2,
+    totalAmount: 150,
+    status: 'confirmed',
+    bookingDate: '2024-01-15',
+    eventDate: '2024-02-20',
+  },
+  {
+    id: 'BK002',
+    eventName: 'Tech Conference 2024',
+    customerName: 'Jane Smith',
+    email: 'jane@example.com',
+    tickets: 1,
+    totalAmount: 89,
+    status: 'pending',
+    bookingDate: '2024-01-14',
+    eventDate: '2024-03-15',
+  },
+  {
+    id: 'BK003',
+    eventName: 'Art Gallery Opening',
+    customerName: 'Mike Johnson',
+    email: 'mike@example.com',
+    tickets: 3,
+    totalAmount: 45,
+    status: 'cancelled',
+    bookingDate: '2024-01-13',
+    eventDate: '2024-02-28',
+  },
+];
 
-  // Mock booking data
-  const bookings = [
-    {
-      id: "BK001",
-      eventName: "Summer Music Festival",
-      customerName: "John Doe",
-      email: "john@example.com",
-      tickets: 2,
-      amount: 150,
-      status: "confirmed",
-      bookingDate: "2024-05-20",
-    },
-    {
-      id: "BK002",
-      eventName: "Tech Innovation Conference",
-      customerName: "Jane Smith",
-      email: "jane@example.com",
-      tickets: 1,
-      amount: 250,
-      status: "pending",
-      bookingDate: "2024-05-19",
-    },
-    {
-      id: "BK003",
-      eventName: "Food & Wine Expo",
-      customerName: "Mike Johnson",
-      email: "mike@example.com",
-      tickets: 4,
-      amount: 340,
-      status: "confirmed",
-      bookingDate: "2024-05-18",
-    },
-  ];
+export default function ViewBookings() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [sortBy, setSortBy] = useState('date');
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "confirmed":
-        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300";
-      case "pending":
-        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300";
-      case "cancelled":
-        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300";
-      default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300";
-    }
+  const getStatusBadge = (status: string) => {
+    const variants = {
+      confirmed: 'default',
+      pending: 'secondary',
+      cancelled: 'destructive',
+    } as const;
+    
+    return (
+      <Badge variant={variants[status as keyof typeof variants] || 'default'}>
+        {status.charAt(0).toUpperCase() + status.slice(1)}
+      </Badge>
+    );
   };
 
-  const filteredBookings = bookings.filter(
-    (booking) =>
-      booking.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  const filteredBookings = mockBookings.filter(booking => {
+    const matchesSearch = 
       booking.eventName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      booking.id.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+      booking.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      booking.email.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesStatus = statusFilter === 'all' || booking.status === statusFilter;
+    
+    return matchesSearch && matchesStatus;
+  });
+
+  const totalBookings = filteredBookings.length;
+  const totalRevenue = filteredBookings
+    .filter(b => b.status === 'confirmed')
+    .reduce((sum, b) => sum + b.totalAmount, 0);
+  const totalTickets = filteredBookings
+    .filter(b => b.status === 'confirmed')
+    .reduce((sum, b) => sum + b.tickets, 0);
 
   return (
-    <div className="p-6 space-y-6 animate-fade-in">
-      <div className="space-y-2">
-        <h1 className="text-4xl font-bold gradient-text">View All Bookings</h1>
-        <p className="text-muted-foreground text-lg">
-          Manage and track all event bookings across your platform.
-        </p>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold">All Bookings</h1>
+        <Button className="flex items-center gap-2">
+          <Download className="w-4 h-4" />
+          Export Data
+        </Button>
       </div>
 
-      {/* Search and Actions */}
-      <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur border-festival-200 dark:border-gray-700">
-        <CardContent className="pt-6">
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-            <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Bookings</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{totalBookings}</div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Tickets</CardTitle>
+            <Calendar className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{totalTickets}</div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+            <DollarSign className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">${totalRevenue}</div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Filters */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Booking Management</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col md:flex-row gap-4 mb-6">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <Input
                 placeholder="Search bookings..."
                 value={searchTerm}
@@ -85,76 +154,70 @@ const ViewBookings = () => {
                 className="pl-10"
               />
             </div>
-            <div className="flex gap-2">
-              <Button variant="outline" className="hover:scale-105 transition-transform duration-200">
-                <Filter className="w-4 h-4 mr-2" />
-                Filter
-              </Button>
-              <Button variant="outline" className="hover:scale-105 transition-transform duration-200">
-                <Download className="w-4 h-4 mr-2" />
-                Export
-              </Button>
-            </div>
+            
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-full md:w-48">
+                <SelectValue placeholder="Filter by status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Statuses</SelectItem>
+                <SelectItem value="confirmed">Confirmed</SelectItem>
+                <SelectItem value="pending">Pending</SelectItem>
+                <SelectItem value="cancelled">Cancelled</SelectItem>
+              </SelectContent>
+            </Select>
+            
+            <Select value={sortBy} onValueChange={setSortBy}>
+              <SelectTrigger className="w-full md:w-48">
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="date">Booking Date</SelectItem>
+                <SelectItem value="event">Event Date</SelectItem>
+                <SelectItem value="amount">Amount</SelectItem>
+                <SelectItem value="name">Customer Name</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
-        </CardContent>
-      </Card>
 
-      {/* Bookings Table */}
-      <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur border-festival-200 dark:border-gray-700">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-2xl">
-            <Users className="w-6 h-6 text-festival-500" />
-            All Bookings ({filteredBookings.length})
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-festival-200 dark:border-gray-600">
-                  <th className="text-left p-3 font-medium">Booking ID</th>
-                  <th className="text-left p-3 font-medium">Event</th>
-                  <th className="text-left p-3 font-medium">Customer</th>
-                  <th className="text-left p-3 font-medium">Tickets</th>
-                  <th className="text-left p-3 font-medium">Amount</th>
-                  <th className="text-left p-3 font-medium">Status</th>
-                  <th className="text-left p-3 font-medium">Date</th>
-                  <th className="text-left p-3 font-medium">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
+          {/* Bookings Table */}
+          <div className="rounded-md border">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Booking ID</TableHead>
+                  <TableHead>Event</TableHead>
+                  <TableHead>Customer</TableHead>
+                  <TableHead>Tickets</TableHead>
+                  <TableHead>Amount</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Booking Date</TableHead>
+                  <TableHead>Event Date</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
                 {filteredBookings.map((booking) => (
-                  <tr key={booking.id} className="border-b border-festival-100 dark:border-gray-700 hover:bg-festival-50 dark:hover:bg-gray-700 transition-colors">
-                    <td className="p-3 font-mono text-sm">{booking.id}</td>
-                    <td className="p-3">{booking.eventName}</td>
-                    <td className="p-3">
+                  <TableRow key={booking.id}>
+                    <TableCell className="font-medium">{booking.id}</TableCell>
+                    <TableCell>{booking.eventName}</TableCell>
+                    <TableCell>
                       <div>
-                        <div className="font-medium">{booking.customerName}</div>
-                        <div className="text-sm text-muted-foreground">{booking.email}</div>
+                        <div>{booking.customerName}</div>
+                        <div className="text-sm text-gray-500">{booking.email}</div>
                       </div>
-                    </td>
-                    <td className="p-3">{booking.tickets}</td>
-                    <td className="p-3 font-semibold">${booking.amount}</td>
-                    <td className="p-3">
-                      <Badge className={getStatusColor(booking.status)}>
-                        {booking.status}
-                      </Badge>
-                    </td>
-                    <td className="p-3">{booking.bookingDate}</td>
-                    <td className="p-3">
-                      <Button variant="outline" size="sm" className="hover:scale-105 transition-transform duration-200">
-                        View
-                      </Button>
-                    </td>
-                  </tr>
+                    </TableCell>
+                    <TableCell>{booking.tickets}</TableCell>
+                    <TableCell>${booking.totalAmount}</TableCell>
+                    <TableCell>{getStatusBadge(booking.status)}</TableCell>
+                    <TableCell>{booking.bookingDate}</TableCell>
+                    <TableCell>{booking.eventDate}</TableCell>
+                  </TableRow>
                 ))}
-              </tbody>
-            </table>
+              </TableBody>
+            </Table>
           </div>
         </CardContent>
       </Card>
     </div>
   );
-};
-
-export default ViewBookings;
+}
