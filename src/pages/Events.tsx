@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Calendar, Users, User, Settings as SettingsIcon, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Calendar, Users, User, Settings as SettingsIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -9,6 +9,7 @@ import { Header } from '../components/Header';
 import { EventsGrid } from '../components/EventsGrid';
 import { SearchAndFilter } from '../components/SearchAndFilter';
 import { MobileNavigation } from '../components/MobileNavigation';
+import { BackButton } from '../components/BackButton';
 import { events } from '../data/events';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,10 +31,6 @@ const Events = () => {
 
   const handleOrdersClick = () => {
     setCurrentState('orders');
-  };
-
-  const handleGoBack = () => {
-    navigate(-1);
   };
 
   const filteredEvents = events.filter(event => {
@@ -60,14 +57,7 @@ const Events = () => {
         <div className="space-y-8">
           {/* Page Header with Back Button */}
           <div className="flex items-center gap-4 animate-fade-in">
-            <Button 
-              variant="outline" 
-              onClick={handleGoBack}
-              className="hover:scale-105 transition-transform duration-200"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Button>
+            <BackButton fallbackPath="/" />
             <div>
               <h1 className="text-5xl font-bold gradient-text">Events Hub</h1>
               <p className="text-xl text-muted-foreground mt-2">
@@ -88,19 +78,19 @@ const Events = () => {
           {/* Main Content with Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
             <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 h-12 bg-white/80 dark:bg-gray-800/80 backdrop-blur">
-              <TabsTrigger value="all-events" className="flex items-center gap-2 text-sm">
+              <TabsTrigger value="all-events" className="flex items-center gap-2 text-sm data-[state=active]:bg-festival-500 data-[state=active]:text-white">
                 <Calendar className="w-4 h-4" />
                 All Events
               </TabsTrigger>
-              <TabsTrigger value="bookings" className="flex items-center gap-2 text-sm">
+              <TabsTrigger value="bookings" className="flex items-center gap-2 text-sm data-[state=active]:bg-festival-500 data-[state=active]:text-white">
                 <Users className="w-4 h-4" />
                 My Bookings
               </TabsTrigger>
-              <TabsTrigger value="profile" className="flex items-center gap-2 text-sm">
+              <TabsTrigger value="profile" className="flex items-center gap-2 text-sm data-[state=active]:bg-festival-500 data-[state=active]:text-white">
                 <User className="w-4 h-4" />
                 Profile
               </TabsTrigger>
-              <TabsTrigger value="settings" className="flex items-center gap-2 text-sm">
+              <TabsTrigger value="settings" className="flex items-center gap-2 text-sm data-[state=active]:bg-festival-500 data-[state=active]:text-white">
                 <SettingsIcon className="w-4 h-4" />
                 Settings
               </TabsTrigger>

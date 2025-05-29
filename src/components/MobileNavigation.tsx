@@ -24,7 +24,9 @@ export const MobileNavigation = ({ currentState, onEventsClick, onOrdersClick }:
         <Link to="/" className="flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 p-0">
           <Button 
             variant={isActive('/') ? 'default' : 'ghost'} 
-            className="flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 w-full"
+            className={`flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 w-full ${
+              isActive('/') ? 'bg-festival-500 text-white' : ''
+            }`}
           >
             <Calendar className="w-5 h-5" />
             <span className="text-xs">Home</span>
@@ -33,7 +35,9 @@ export const MobileNavigation = ({ currentState, onEventsClick, onOrdersClick }:
         <Link to="/events" className="flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 p-0">
           <Button 
             variant={isActive('/events') ? 'default' : 'ghost'} 
-            className="flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 w-full"
+            className={`flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 w-full ${
+              isActive('/events') ? 'bg-festival-500 text-white' : ''
+            }`}
           >
             <Calendar className="w-5 h-5" />
             <span className="text-xs">Events</span>
@@ -42,7 +46,9 @@ export const MobileNavigation = ({ currentState, onEventsClick, onOrdersClick }:
         <Link to="/bookings" className="flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 p-0">
           <Button 
             variant={isActive('/bookings') ? 'default' : 'ghost'} 
-            className="flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 w-full"
+            className={`flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 w-full ${
+              isActive('/bookings') ? 'bg-festival-500 text-white' : ''
+            }`}
           >
             <Users className="w-5 h-5" />
             <span className="text-xs">Bookings</span>
@@ -51,7 +57,9 @@ export const MobileNavigation = ({ currentState, onEventsClick, onOrdersClick }:
         <Link to="/profile" className="flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 p-0">
           <Button 
             variant={isActive('/profile') ? 'default' : 'ghost'} 
-            className="flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 w-full"
+            className={`flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 w-full ${
+              isActive('/profile') ? 'bg-festival-500 text-white' : ''
+            }`}
           >
             <User className="w-5 h-5" />
             <span className="text-xs">Profile</span>
@@ -60,7 +68,9 @@ export const MobileNavigation = ({ currentState, onEventsClick, onOrdersClick }:
         <Link to="/settings" className="flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 p-0">
           <Button 
             variant={isActive('/settings') ? 'default' : 'ghost'} 
-            className="flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 w-full"
+            className={`flex flex-col items-center gap-1 h-16 rounded-none transition-all duration-200 w-full ${
+              isActive('/settings') ? 'bg-festival-500 text-white' : ''
+            }`}
           >
             <SettingsIcon className="w-5 h-5" />
             <span className="text-xs">Settings</span>

@@ -40,7 +40,9 @@ export const Header = ({ currentState, onEventsClick, onOrdersClick }: HeaderPro
               <Link to="/">
                 <Button
                   variant={isActive('/') ? 'default' : 'ghost'}
-                  className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
+                  className={`flex items-center gap-2 transition-all duration-200 hover:scale-105 ${
+                    isActive('/') ? 'bg-festival-500 text-white shadow-lg' : ''
+                  }`}
                 >
                   <Calendar className="w-4 h-4" />
                   Home
@@ -49,7 +51,9 @@ export const Header = ({ currentState, onEventsClick, onOrdersClick }: HeaderPro
               <Link to="/events">
                 <Button
                   variant={isActive('/events') ? 'default' : 'ghost'}
-                  className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
+                  className={`flex items-center gap-2 transition-all duration-200 hover:scale-105 ${
+                    isActive('/events') ? 'bg-festival-500 text-white shadow-lg' : ''
+                  }`}
                 >
                   <Calendar className="w-4 h-4" />
                   Events
@@ -58,7 +62,9 @@ export const Header = ({ currentState, onEventsClick, onOrdersClick }: HeaderPro
               <Link to="/dashboard">
                 <Button
                   variant={isActive('/dashboard') ? 'default' : 'ghost'}
-                  className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
+                  className={`flex items-center gap-2 transition-all duration-200 hover:scale-105 ${
+                    isActive('/dashboard') ? 'bg-festival-500 text-white shadow-lg' : ''
+                  }`}
                 >
                   <BarChart3 className="w-4 h-4" />
                   Dashboard
@@ -67,7 +73,9 @@ export const Header = ({ currentState, onEventsClick, onOrdersClick }: HeaderPro
               <Link to="/bookings">
                 <Button
                   variant={isActive('/bookings') ? 'default' : 'ghost'}
-                  className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
+                  className={`flex items-center gap-2 transition-all duration-200 hover:scale-105 ${
+                    isActive('/bookings') ? 'bg-festival-500 text-white shadow-lg' : ''
+                  }`}
                 >
                   <Users className="w-4 h-4" />
                   Bookings
@@ -76,7 +84,9 @@ export const Header = ({ currentState, onEventsClick, onOrdersClick }: HeaderPro
               <Link to="/profile">
                 <Button
                   variant={isActive('/profile') ? 'default' : 'ghost'}
-                  className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
+                  className={`flex items-center gap-2 transition-all duration-200 hover:scale-105 ${
+                    isActive('/profile') ? 'bg-festival-500 text-white shadow-lg' : ''
+                  }`}
                 >
                   <User className="w-4 h-4" />
                   Profile
@@ -85,7 +95,9 @@ export const Header = ({ currentState, onEventsClick, onOrdersClick }: HeaderPro
               <Link to="/settings">
                 <Button
                   variant={isActive('/settings') ? 'default' : 'ghost'}
-                  className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
+                  className={`flex items-center gap-2 transition-all duration-200 hover:scale-105 ${
+                    isActive('/settings') ? 'bg-festival-500 text-white shadow-lg' : ''
+                  }`}
                 >
                   <SettingsIcon className="w-4 h-4" />
                   Settings
