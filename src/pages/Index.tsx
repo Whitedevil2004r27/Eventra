@@ -1,8 +1,8 @@
-
 import { useState } from 'react';
-import { CreditCard } from 'lucide-react';
+import { CreditCard, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { HeroSection } from '../components/HeroSection';
 import { SearchAndFilter } from '../components/SearchAndFilter';
@@ -21,6 +21,7 @@ import { useToast } from '@/hooks/use-toast';
 type AppState = 'events' | 'ticket-selection' | 'seat-selection' | 'checkout' | 'success' | 'failure' | 'orders';
 
 const Index = () => {
+  const navigate = useNavigate();
   const [currentState, setCurrentState] = useState<AppState>('events');
   const [selectedEventId, setSelectedEventId] = useState<string>('');
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
