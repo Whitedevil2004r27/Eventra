@@ -54,7 +54,7 @@ const AppContent = () => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <ThemeProvider defaultTheme="light" storageKey="fest-book-theme">
+    <ThemeProvider defaultTheme="dark" storageKey="fest-book-theme">
       <TooltipProvider>
         <Toaster />
         <Sonner />
