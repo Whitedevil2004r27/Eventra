@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { CreditCard, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -161,17 +160,17 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-purple-950 to-gray-900 transition-colors duration-300">
+    <div className="min-h-screen bg-gradient-to-br from-festival-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-purple-950 dark:to-gray-900 transition-colors duration-300">
       <Header 
         currentState={currentState}
         onEventsClick={resetToEvents}
         onOrdersClick={() => setCurrentState('orders')}
       />
 
-      {/* Main Content - Full Screen */}
-      <main className="w-full px-4 sm:px-6 lg:px-8 py-8">
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {currentState === 'events' && (
-          <div className="space-y-12 animate-fade-in w-full">
+          <div className="space-y-12 animate-fade-in">
             <HeroSection />
             
             {/* Quick Navigation to Events Page */}
