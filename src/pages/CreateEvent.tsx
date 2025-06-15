@@ -1,58 +1,86 @@
 
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Calendar, Clock, MapPin, Upload, Save } from 'lucide-react';
-import { toast } from 'sonner';
+import { useApp } from '@/contexts/AppContext';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
+
+const eventSchema = z.object({
+  title: z.string().min(1, 'Title is required').max(100, 'Title must be less than 100 characters'),
+  description: z.string().min(10, 'Description must be at least 10 characters'),
+  date: z.string().min(1, 'Date is required'),
+  time: z.string().min(1, 'Time is required'),
+  venue: z.string().min(1, 'Venue is required'),
+});
+
+type EventFormData = z.infer<typeof eventSchema>;
 
 export default function CreateEvent() {
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    date: '',
-    time: '',
-    venue: '',
-    image: null as File | null,
-  });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const { addNotification } = useApp();
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<EventFormData>({
+    resolver: zodResolver(eventSchema),
+  });
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setFormData(prev => ({ ...prev, image: file }));
+      if (file.size > 10 * 1024 * 1024) { // 10MB limit
+        addNotification({
+          message: 'Image file must be less than 10MB',
+          type: 'error',
+        });
+        return;
+      }
+      setImageFile(file);
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: EventFormData) => {
     setIsSubmitting(true);
 
     try {
+      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
-      toast.success('Event created successfully!');
       
-      setFormData({
-        title: '',
-        description: '',
-        date: '',
-        time: '',
-        venue: '',
-        image: null,
+      addNotification({
+        message: 'Event created successfully!',
+        type: 'success',
       });
+      
+      reset();
+      setImageFile(null);
     } catch (error) {
-      toast.error('Failed to create event. Please try again.');
+      addNotification({
+        message: 'Failed to create event. Please try again.',
+        type: 'error',
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  if (isSubmitting) {
+    return (
+      <div className="flex items-center justify-center min-h-96">
+        <LoadingSpinner size="lg" text="Creating event..." />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
@@ -66,7 +94,7 @@ export default function CreateEvent() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <Label htmlFor="title" className="text-gray-300">Event Title *</Label>
@@ -74,11 +102,12 @@ export default function CreateEvent() {
                   id="title"
                   type="text"
                   placeholder="Enter event title"
-                  value={formData.title}
-                  onChange={(e) => handleInputChange('title', e.target.value)}
                   className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
-                  required
+                  {...register('title')}
                 />
+                {errors.title && (
+                  <p className="text-red-400 text-sm">{errors.title.message}</p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -90,11 +119,12 @@ export default function CreateEvent() {
                     type="text"
                     placeholder="Enter venue location"
                     className="pl-10 bg-gray-700 border-gray-600 text-white placeholder-gray-400"
-                    value={formData.venue}
-                    onChange={(e) => handleInputChange('venue', e.target.value)}
-                    required
+                    {...register('venue')}
                   />
                 </div>
+                {errors.venue && (
+                  <p className="text-red-400 text-sm">{errors.venue.message}</p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -102,11 +132,12 @@ export default function CreateEvent() {
                 <Input
                   id="date"
                   type="date"
-                  value={formData.date}
-                  onChange={(e) => handleInputChange('date', e.target.value)}
                   className="bg-gray-700 border-gray-600 text-white"
-                  required
+                  {...register('date')}
                 />
+                {errors.date && (
+                  <p className="text-red-400 text-sm">{errors.date.message}</p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -117,11 +148,12 @@ export default function CreateEvent() {
                     id="time"
                     type="time"
                     className="pl-10 bg-gray-700 border-gray-600 text-white"
-                    value={formData.time}
-                    onChange={(e) => handleInputChange('time', e.target.value)}
-                    required
+                    {...register('time')}
                   />
                 </div>
+                {errors.time && (
+                  <p className="text-red-400 text-sm">{errors.time.message}</p>
+                )}
               </div>
             </div>
 
@@ -131,11 +163,12 @@ export default function CreateEvent() {
                 id="description"
                 placeholder="Provide a detailed description of the event"
                 rows={4}
-                value={formData.description}
-                onChange={(e) => handleInputChange('description', e.target.value)}
                 className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
-                required
+                {...register('description')}
               />
+              {errors.description && (
+                <p className="text-red-400 text-sm">{errors.description.message}</p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -151,7 +184,7 @@ export default function CreateEvent() {
                 <label htmlFor="image" className="cursor-pointer">
                   <Upload className="w-12 h-12 mx-auto text-gray-400 mb-4" />
                   <p className="text-sm text-gray-300">
-                    {formData.image ? formData.image.name : 'Click to upload event image'}
+                    {imageFile ? imageFile.name : 'Click to upload event image'}
                   </p>
                   <p className="text-xs text-gray-400 mt-2">
                     PNG, JPG, GIF up to 10MB
@@ -167,7 +200,7 @@ export default function CreateEvent() {
                 className="bg-purple-600 hover:bg-purple-700 text-white"
               >
                 <Save className="w-4 h-4 mr-2" />
-                {isSubmitting ? 'Creating Event...' : 'Create Event'}
+                Create Event
               </Button>
               <Button type="button" variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-700">
                 Save as Draft
