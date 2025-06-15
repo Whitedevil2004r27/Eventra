@@ -54,24 +54,24 @@ export default function Analytics() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Analytics Report</h1>
-        <Button className="flex items-center gap-2">
-          <Download className="w-4 h-4" />
+        <h1 className="text-3xl font-bold text-white">Analytics Report</h1>
+        <Button className="bg-purple-600 hover:bg-purple-700 text-white">
+          <Download className="w-4 h-4 mr-2" />
           Export Report
         </Button>
       </div>
 
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card>
+        <Card className="bg-gray-800 border-gray-700">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-gray-300">Total Revenue</CardTitle>
+            <DollarSign className="h-4 w-4 text-green-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">$28,500</div>
-            <p className="text-xs text-muted-foreground">
-              <Badge variant="secondary" className="text-green-600">
+            <div className="text-2xl font-bold text-white">$28,500</div>
+            <p className="text-xs text-gray-400">
+              <Badge variant="secondary" className="text-green-400 bg-green-900">
                 <TrendingUp className="w-3 h-3 mr-1" />
                 +12.5%
               </Badge>
@@ -80,15 +80,15 @@ export default function Analytics() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-gray-800 border-gray-700">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Bookings</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-gray-300">Total Bookings</CardTitle>
+            <Users className="h-4 w-4 text-blue-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">1,430</div>
-            <p className="text-xs text-muted-foreground">
-              <Badge variant="secondary" className="text-green-600">
+            <div className="text-2xl font-bold text-white">1,430</div>
+            <p className="text-xs text-gray-400">
+              <Badge variant="secondary" className="text-green-400 bg-green-900">
                 <TrendingUp className="w-3 h-3 mr-1" />
                 +8.2%
               </Badge>
@@ -97,15 +97,15 @@ export default function Analytics() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-gray-800 border-gray-700">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Events</CardTitle>
-            <Calendar className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-gray-300">Active Events</CardTitle>
+            <Calendar className="h-4 w-4 text-purple-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">24</div>
-            <p className="text-xs text-muted-foreground">
-              <Badge variant="secondary" className="text-blue-600">
+            <div className="text-2xl font-bold text-white">24</div>
+            <p className="text-xs text-gray-400">
+              <Badge variant="secondary" className="text-blue-400 bg-blue-900">
                 <Eye className="w-3 h-3 mr-1" />
                 6 upcoming
               </Badge>
@@ -114,15 +114,15 @@ export default function Analytics() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-gray-800 border-gray-700">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Conversion Rate</CardTitle>
-            <Target className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-gray-300">Conversion Rate</CardTitle>
+            <Target className="h-4 w-4 text-orange-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">24.5%</div>
-            <p className="text-xs text-muted-foreground">
-              <Badge variant="secondary" className="text-green-600">
+            <div className="text-2xl font-bold text-white">24.5%</div>
+            <p className="text-xs text-gray-400">
+              <Badge variant="secondary" className="text-green-400 bg-green-900">
                 <TrendingUp className="w-3 h-3 mr-1" />
                 +2.1%
               </Badge>
@@ -134,18 +134,25 @@ export default function Analytics() {
 
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
+        <Card className="bg-gray-800 border-gray-700">
           <CardHeader>
-            <CardTitle>Revenue & Bookings Trend</CardTitle>
+            <CardTitle className="text-white">Revenue & Bookings Trend</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={revenueData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis yAxisId="left" />
-                <YAxis yAxisId="right" orientation="right" />
-                <Tooltip />
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                <XAxis dataKey="month" stroke="#9CA3AF" />
+                <YAxis yAxisId="left" stroke="#9CA3AF" />
+                <YAxis yAxisId="right" orientation="right" stroke="#9CA3AF" />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: '#1F2937', 
+                    border: '1px solid #374151',
+                    borderRadius: '8px',
+                    color: '#fff'
+                  }} 
+                />
                 <Bar yAxisId="left" dataKey="revenue" fill="#8b5cf6" name="Revenue ($)" />
                 <Bar yAxisId="right" dataKey="bookings" fill="#06b6d4" name="Bookings" />
               </BarChart>
@@ -153,9 +160,9 @@ export default function Analytics() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-gray-800 border-gray-700">
           <CardHeader>
-            <CardTitle>Event Categories</CardTitle>
+            <CardTitle className="text-white">Event Categories</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -173,7 +180,14 @@ export default function Analytics() {
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: '#1F2937', 
+                    border: '1px solid #374151',
+                    borderRadius: '8px',
+                    color: '#fff'
+                  }} 
+                />
               </PieChart>
             </ResponsiveContainer>
           </CardContent>
@@ -181,31 +195,31 @@ export default function Analytics() {
       </div>
 
       {/* Top Events Table */}
-      <Card>
+      <Card className="bg-gray-800 border-gray-700">
         <CardHeader>
-          <CardTitle>Top Performing Events</CardTitle>
+          <CardTitle className="text-white">Top Performing Events</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {topEventsData.map((event, index) => (
-              <div key={event.name} className="flex items-center justify-between p-4 border rounded-lg">
+              <div key={event.name} className="flex items-center justify-between p-4 bg-gray-700 rounded-lg">
                 <div className="flex items-center gap-4">
-                  <div className="w-8 h-8 bg-festival-500 text-white rounded-full flex items-center justify-center font-bold">
+                  <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold">
                     {index + 1}
                   </div>
                   <div>
-                    <h3 className="font-semibold">{event.name}</h3>
-                    <p className="text-sm text-gray-500">
+                    <h3 className="font-semibold text-white">{event.name}</h3>
+                    <p className="text-sm text-gray-400">
                       {event.bookings} bookings • ${event.revenue} revenue
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Badge variant="outline">
+                  <Badge variant="outline" className="border-gray-600 text-gray-300">
                     <Ticket className="w-3 h-3 mr-1" />
                     {event.bookings}
                   </Badge>
-                  <Badge variant="secondary">
+                  <Badge variant="secondary" className="bg-green-900 text-green-300">
                     <DollarSign className="w-3 h-3 mr-1" />
                     ${event.revenue}
                   </Badge>
