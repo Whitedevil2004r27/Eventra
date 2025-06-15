@@ -36,9 +36,12 @@ export default function CreateEvent() {
     setIsSubmitting(true);
 
     try {
+      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
+      
       toast.success('Event created successfully!');
       
+      // Reset form
       setFormData({
         title: '',
         description: '',
@@ -56,12 +59,14 @@ export default function CreateEvent() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
-      <h1 className="text-3xl font-bold text-white">Create New Event</h1>
+      <div className="flex items-center gap-3">
+        <h1 className="text-3xl font-bold">Create New Event</h1>
+      </div>
 
-      <Card className="bg-gray-800 border-gray-700">
+      <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
-            <Calendar className="w-5 h-5 text-purple-400" />
+          <CardTitle className="flex items-center gap-2">
+            <Calendar className="w-5 h-5" />
             Event Details
           </CardTitle>
         </CardHeader>
@@ -69,27 +74,26 @@ export default function CreateEvent() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="title" className="text-gray-300">Event Title *</Label>
+                <Label htmlFor="title">Event Title *</Label>
                 <Input
                   id="title"
                   type="text"
                   placeholder="Enter event title"
                   value={formData.title}
                   onChange={(e) => handleInputChange('title', e.target.value)}
-                  className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="venue" className="text-gray-300">Venue *</Label>
+                <Label htmlFor="venue">Venue *</Label>
                 <div className="relative">
                   <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                   <Input
                     id="venue"
                     type="text"
                     placeholder="Enter venue location"
-                    className="pl-10 bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+                    className="pl-10"
                     value={formData.venue}
                     onChange={(e) => handleInputChange('venue', e.target.value)}
                     required
@@ -98,25 +102,24 @@ export default function CreateEvent() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="date" className="text-gray-300">Event Date *</Label>
+                <Label htmlFor="date">Event Date *</Label>
                 <Input
                   id="date"
                   type="date"
                   value={formData.date}
                   onChange={(e) => handleInputChange('date', e.target.value)}
-                  className="bg-gray-700 border-gray-600 text-white"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="time" className="text-gray-300">Event Time *</Label>
+                <Label htmlFor="time">Event Time *</Label>
                 <div className="relative">
                   <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                   <Input
                     id="time"
                     type="time"
-                    className="pl-10 bg-gray-700 border-gray-600 text-white"
+                    className="pl-10"
                     value={formData.time}
                     onChange={(e) => handleInputChange('time', e.target.value)}
                     required
@@ -126,21 +129,20 @@ export default function CreateEvent() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description" className="text-gray-300">Event Description *</Label>
+              <Label htmlFor="description">Event Description *</Label>
               <Textarea
                 id="description"
                 placeholder="Provide a detailed description of the event"
                 rows={4}
                 value={formData.description}
                 onChange={(e) => handleInputChange('description', e.target.value)}
-                className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="image" className="text-gray-300">Event Image</Label>
-              <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center bg-gray-700/50">
+              <Label htmlFor="image">Event Image</Label>
+              <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center">
                 <input
                   id="image"
                   type="file"
@@ -150,10 +152,10 @@ export default function CreateEvent() {
                 />
                 <label htmlFor="image" className="cursor-pointer">
                   <Upload className="w-12 h-12 mx-auto text-gray-400 mb-4" />
-                  <p className="text-sm text-gray-300">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
                     {formData.image ? formData.image.name : 'Click to upload event image'}
                   </p>
-                  <p className="text-xs text-gray-400 mt-2">
+                  <p className="text-xs text-gray-500 mt-2">
                     PNG, JPG, GIF up to 10MB
                   </p>
                 </label>
@@ -161,15 +163,11 @@ export default function CreateEvent() {
             </div>
 
             <div className="flex gap-4 pt-4">
-              <Button 
-                type="submit" 
-                disabled={isSubmitting} 
-                className="bg-purple-600 hover:bg-purple-700 text-white"
-              >
-                <Save className="w-4 h-4 mr-2" />
+              <Button type="submit" disabled={isSubmitting} className="flex items-center gap-2">
+                <Save className="w-4 h-4" />
                 {isSubmitting ? 'Creating Event...' : 'Create Event'}
               </Button>
-              <Button type="button" variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-700">
+              <Button type="button" variant="outline">
                 Save as Draft
               </Button>
             </div>
