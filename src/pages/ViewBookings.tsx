@@ -1,12 +1,27 @@
 
-import { Badge } from '@/components/ui/badge';
-import { AdvancedTable } from '@/components/AdvancedTable';
-import { Button } from '@/components/ui/button';
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Download, Eye, Edit, Trash2 } from 'lucide-react';
-import { useApp } from '@/contexts/AppContext';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Search, Filter, Download, Eye, Edit, Trash2 } from 'lucide-react';
 
-const mockBookingsData = [
+const bookingsData = [
   {
     id: 'BK001',
     customerName: 'John Doe',
@@ -58,7 +73,16 @@ const mockBookingsData = [
 ];
 
 export default function ViewBookings() {
-  const { addNotification } = useApp();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+
+  const filteredBookings = bookingsData.filter(booking => {
+    const matchesSearch = booking.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         booking.eventName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         booking.id.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === 'all' || booking.status.toLowerCase() === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
@@ -69,104 +93,6 @@ export default function ViewBookings() {
     
     return statusConfig[status.toLowerCase() as keyof typeof statusConfig] || 'bg-gray-600 text-white';
   };
-
-  const handleAction = (action: string, bookingId: string) => {
-    addNotification({
-      message: `${action} action performed on booking ${bookingId}`,
-      type: 'info',
-    });
-  };
-
-  const columns = [
-    {
-      key: 'id' as keyof typeof mockBookingsData[0],
-      label: 'Booking ID',
-      sortable: true,
-    },
-    {
-      key: 'customerName' as keyof typeof mockBookingsData[0],
-      label: 'Customer',
-      sortable: true,
-      render: (value: string, row: typeof mockBookingsData[0]) => (
-        <div>
-          <div className="font-medium text-white">{value}</div>
-          <div className="text-sm text-gray-400">{row.customerEmail}</div>
-        </div>
-      ),
-    },
-    {
-      key: 'eventName' as keyof typeof mockBookingsData[0],
-      label: 'Event',
-      sortable: true,
-      filterable: true,
-      render: (value: string, row: typeof mockBookingsData[0]) => (
-        <div>
-          <div className="font-medium text-white">{value}</div>
-          <div className="text-sm text-gray-400">{row.eventDate}</div>
-        </div>
-      ),
-    },
-    {
-      key: 'ticketType' as keyof typeof mockBookingsData[0],
-      label: 'Ticket Type',
-      sortable: true,
-      filterable: true,
-    },
-    {
-      key: 'quantity' as keyof typeof mockBookingsData[0],
-      label: 'Quantity',
-      sortable: true,
-    },
-    {
-      key: 'totalAmount' as keyof typeof mockBookingsData[0],
-      label: 'Amount',
-      sortable: true,
-      render: (value: number) => `$${value}`,
-    },
-    {
-      key: 'status' as keyof typeof mockBookingsData[0],
-      label: 'Status',
-      sortable: true,
-      filterable: true,
-      render: (value: string) => (
-        <Badge className={getStatusBadge(value)}>
-          {value}
-        </Badge>
-      ),
-    },
-    {
-      key: 'actions' as keyof typeof mockBookingsData[0],
-      label: 'Actions',
-      render: (_: any, row: typeof mockBookingsData[0]) => (
-        <div className="flex gap-2">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="text-gray-400 hover:text-white hover:bg-gray-700"
-            onClick={() => handleAction('View', row.id)}
-          >
-            <Eye className="w-4 h-4" />
-          </Button>
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="text-gray-400 hover:text-white hover:bg-gray-700"
-            onClick={() => handleAction('Edit', row.id)}
-          >
-            <Edit className="w-4 h-4" />
-          </Button>
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="text-gray-400 hover:text-red-400 hover:bg-gray-700"
-            onClick={() => handleAction('Delete', row.id)}
-          >
-            <Trash2 className="w-4 h-4" />
-          </Button>
-        </div>
-      ),
-    },
-  ];
 
   return (
     <div className="space-y-6">
@@ -206,18 +132,103 @@ export default function ViewBookings() {
         </Card>
       </div>
 
-      {/* Advanced Table */}
+      {/* Filters */}
       <Card className="bg-gray-800 border-gray-700">
         <CardHeader>
-          <CardTitle className="text-white">Bookings Management</CardTitle>
+          <CardTitle className="text-white">Filters & Search</CardTitle>
         </CardHeader>
         <CardContent>
-          <AdvancedTable
-            data={mockBookingsData}
-            columns={columns}
-            searchableColumns={['customerName', 'eventName', 'id']}
-            pageSize={10}
-          />
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Input
+                placeholder="Search by customer, event, or booking ID..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+              />
+            </div>
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-full md:w-48 bg-gray-700 border-gray-600 text-white">
+                <SelectValue placeholder="Filter by status" />
+              </SelectTrigger>
+              <SelectContent className="bg-gray-700 border-gray-600">
+                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="confirmed">Confirmed</SelectItem>
+                <SelectItem value="pending">Pending</SelectItem>
+                <SelectItem value="cancelled">Cancelled</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Bookings Table */}
+      <Card className="bg-gray-800 border-gray-700">
+        <CardHeader>
+          <CardTitle className="text-white">Bookings ({filteredBookings.length})</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-gray-700">
+                  <TableHead className="text-gray-300">Booking ID</TableHead>
+                  <TableHead className="text-gray-300">Customer</TableHead>
+                  <TableHead className="text-gray-300">Event</TableHead>
+                  <TableHead className="text-gray-300">Date</TableHead>
+                  <TableHead className="text-gray-300">Tickets</TableHead>
+                  <TableHead className="text-gray-300">Amount</TableHead>
+                  <TableHead className="text-gray-300">Status</TableHead>
+                  <TableHead className="text-gray-300">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredBookings.map((booking) => (
+                  <TableRow key={booking.id} className="border-gray-700 hover:bg-gray-700/50">
+                    <TableCell className="font-medium text-white">{booking.id}</TableCell>
+                    <TableCell>
+                      <div className="text-white">
+                        <div className="font-medium">{booking.customerName}</div>
+                        <div className="text-sm text-gray-400">{booking.customerEmail}</div>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="text-white">
+                        <div className="font-medium">{booking.eventName}</div>
+                        <div className="text-sm text-gray-400">{booking.eventDate}</div>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-gray-300">{booking.bookingDate}</TableCell>
+                    <TableCell>
+                      <div className="text-white">
+                        <div>{booking.quantity} × {booking.ticketType}</div>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-white font-medium">${booking.totalAmount}</TableCell>
+                    <TableCell>
+                      <Badge className={getStatusBadge(booking.status)}>
+                        {booking.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex gap-2">
+                        <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white hover:bg-gray-700">
+                          <Eye className="w-4 h-4" />
+                        </Button>
+                        <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white hover:bg-gray-700">
+                          <Edit className="w-4 h-4" />
+                        </Button>
+                        <Button variant="ghost" size="sm" className="text-gray-400 hover:text-red-400 hover:bg-gray-700">
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>

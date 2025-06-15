@@ -7,25 +7,22 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { Separator } from '@/components/ui/separator';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
   User, 
   Bell, 
   Shield, 
   Palette, 
+  Mail, 
+  Phone, 
   Save,
   AlertTriangle 
 } from 'lucide-react';
-import { useApp } from '@/contexts/AppContext';
-import { useAuth } from '@/contexts/AuthContext';
+import { toast } from 'sonner';
 
 export default function Settings() {
-  const { state, dispatch, addNotification } = useApp();
-  const { user } = useAuth();
-  
   const [formData, setFormData] = useState({
-    name: user?.user_metadata?.full_name || 'John Doe',
-    email: user?.email || 'john@example.com',
+    name: 'John Doe',
+    email: 'john@example.com',
     phone: '+1 (555) 123-4567',
     company: 'Event Management Co.',
     bio: 'Professional event organizer with 5+ years of experience.',
@@ -45,18 +42,7 @@ export default function Settings() {
   });
 
   const handleSave = () => {
-    addNotification({
-      message: 'Settings saved successfully!',
-      type: 'success',
-    });
-  };
-
-  const handleThemeChange = (newTheme: 'dark' | 'light') => {
-    dispatch({ type: 'SET_THEME', payload: newTheme });
-    addNotification({
-      message: `Theme changed to ${newTheme} mode`,
-      type: 'info',
-    });
+    toast.success('Settings saved successfully!');
   };
 
   return (
@@ -90,7 +76,6 @@ export default function Settings() {
                 value={formData.email}
                 onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                 className="bg-gray-700 border-gray-600 text-white"
-                disabled
               />
             </div>
             <div className="space-y-2">
@@ -121,33 +106,6 @@ export default function Settings() {
               className="bg-gray-700 border-gray-600 text-white"
               rows={3}
             />
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Theme Settings */}
-      <Card className="bg-gray-800 border-gray-700">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
-            <Palette className="w-5 h-5 text-pink-400" />
-            Appearance
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="space-y-1">
-              <p className="text-white font-medium">Theme Mode</p>
-              <p className="text-sm text-gray-400">Choose your preferred theme</p>
-            </div>
-            <Select value={state.theme} onValueChange={handleThemeChange}>
-              <SelectTrigger className="w-32 bg-gray-700 border-gray-600 text-white">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-gray-700 border-gray-600">
-                <SelectItem value="dark">Dark</SelectItem>
-                <SelectItem value="light">Light</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
         </CardContent>
       </Card>
