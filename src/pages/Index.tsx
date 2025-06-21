@@ -1,3 +1,4 @@
+
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { CreditCard, Calendar, Sparkles, Play, ArrowRight, Star } from 'lucide-react';
@@ -15,6 +16,7 @@ import { CheckoutForm } from '../components/CheckoutForm';
 import { PaymentSuccess } from '../components/PaymentSuccess';
 import { PaymentFailure } from '../components/PaymentFailure';
 import { OrderHistory } from '../components/OrderHistory';
+import { Footer } from '../components/Footer';
 import { events, ticketTypes } from '../data/events';
 import { CartItem, PaymentFormData, Order } from '../types';
 import { useToast } from '@/hooks/use-toast';
