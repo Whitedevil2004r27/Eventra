@@ -54,7 +54,7 @@ const AppContent = () => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <ThemeProvider defaultTheme="light" storageKey="eventra-theme">
+    <ThemeProvider defaultTheme="dark" storageKey="eventra-theme">
       <TooltipProvider>
         <Toaster />
         <Sonner />

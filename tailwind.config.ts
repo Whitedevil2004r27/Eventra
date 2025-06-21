@@ -75,6 +75,11 @@ export default {
 					800: '#6b21a8',
 					900: '#581c87',
 					950: '#3b0764'
+				},
+				neon: {
+					blue: '#00f0ff',
+					purple: '#8b5cf6',
+					pink: '#ec4899'
 				}
 			},
 			borderRadius: {
@@ -119,13 +124,41 @@ export default {
 					'60%': {
 						transform: 'translateY(-5px)'
 					}
+				},
+				'float': {
+					'0%, 100%': {
+						transform: 'translateY(0px)'
+					},
+					'50%': {
+						transform: 'translateY(-10px)'
+					}
+				},
+				'glow': {
+					'0%, 100%': {
+						boxShadow: '0 0 20px rgba(139, 92, 246, 0.3)'
+					},
+					'50%': {
+						boxShadow: '0 0 30px rgba(139, 92, 246, 0.6)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
-				'ticket-bounce': 'ticket-bounce 1s ease-in-out'
+				'ticket-bounce': 'ticket-bounce 1s ease-in-out',
+				'float': 'float 3s ease-in-out infinite',
+				'glow': 'glow 2s ease-in-out infinite'
+			},
+			boxShadow: {
+				'neumorphism': 'inset 5px 5px 10px rgba(0,0,0,0.2), inset -5px -5px 10px rgba(255,255,255,0.1)',
+				'neumorphism-pressed': 'inset 8px 8px 16px rgba(0,0,0,0.3), inset -8px -8px 16px rgba(255,255,255,0.1)',
+				'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+				'neon': '0 0 20px rgba(139, 92, 246, 0.5)',
+				'3d-card': '0 10px 30px rgba(0,0,0,0.3), 0 1px 8px rgba(0,0,0,0.2)'
+			},
+			backdropBlur: {
+				'glass': '40px'
 			}
 		}
 	},
