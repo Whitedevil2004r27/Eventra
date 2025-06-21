@@ -1,7 +1,7 @@
 
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface BackButtonProps {
   fallbackPath?: string;
@@ -10,6 +10,13 @@ interface BackButtonProps {
 
 export const BackButton = ({ fallbackPath = '/', className = '' }: BackButtonProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Hide back button on home and dashboard pages
+  const hideOnPaths = ['/', '/dashboard'];
+  if (hideOnPaths.includes(location.pathname)) {
+    return null;
+  }
 
   const handleBack = () => {
     // Check if there's history to go back to
