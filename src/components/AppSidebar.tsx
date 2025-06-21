@@ -86,7 +86,7 @@ export function AppSidebar() {
             <Ticket className="w-5 h-5 text-white" />
           </div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold gradient-text">Fest-Book</h1>
+            <h1 className="text-xl font-bold gradient-text">Eventra</h1>
             <Badge variant="secondary" className="text-xs bg-festival-100 dark:bg-festival-900 text-festival-700 dark:text-festival-300">
               Pro
             </Badge>

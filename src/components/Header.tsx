@@ -28,7 +28,7 @@ export const Header = ({ currentState, onEventsClick, onOrdersClick }: HeaderPro
             <div className="w-10 h-10 bg-gradient-to-br from-festival-500 to-festival-600 rounded-xl flex items-center justify-center shadow-lg animate-pulse-glow">
               <Ticket className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-3xl font-bold gradient-text">Fest-Book</h1>
+            <h1 className="text-3xl font-bold gradient-text">Eventra</h1>
             <Badge variant="secondary" className="hidden sm:inline-flex bg-festival-100 dark:bg-festival-900 text-festival-700 dark:text-festival-300">
               <Sparkles className="w-3 h-3 mr-1" />
               Premium
