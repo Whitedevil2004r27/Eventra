@@ -79,32 +79,49 @@ export function AppSidebar() {
   };
 
   return (
-    <Sidebar className="border-r border-festival-200 dark:border-gray-700">
-      <SidebarHeader className="border-b border-festival-200 dark:border-gray-700 p-4">
-        <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-200">
-          <div className="w-8 h-8 bg-gradient-to-br from-festival-500 to-festival-600 rounded-lg flex items-center justify-center shadow-lg">
-            <Ticket className="w-5 h-5 text-white" />
+    <Sidebar className="glass-card border-0 bg-gradient-to-b from-slate-900/95 to-slate-800/95 backdrop-blur-xl shadow-2xl">
+      <SidebarHeader className="border-b border-slate-700/50 p-6 bg-gradient-to-r from-slate-800/50 to-slate-700/30">
+        <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-all duration-300 hover:rotate-1 group">
+          <div className="w-10 h-10 bg-gradient-to-br from-purple-500 via-blue-500 to-teal-400 rounded-xl flex items-center justify-center shadow-xl hover:shadow-purple-500/25 transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-purple-500/40 neumorphic-card">
+            <Ticket className="w-6 h-6 text-white drop-shadow-lg" />
           </div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold gradient-text">Eventra</h1>
-            <Badge variant="secondary" className="text-xs bg-festival-100 dark:bg-festival-900 text-festival-700 dark:text-festival-300">
+            <h1 className="text-2xl font-bold gradient-text text-shadow-glow">Eventra</h1>
+            <Badge variant="secondary" className="text-xs bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-purple-300 border border-purple-500/30 shadow-lg">
               Pro
             </Badge>
           </div>
         </Link>
       </SidebarHeader>
 
-      <SidebarContent>
+      <SidebarContent className="p-4 space-y-6">
         <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-slate-400 text-sm font-semibold tracking-wider uppercase mb-3 px-2">
+            Navigation
+          </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="space-y-2">
               {mainNavItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={isActive(item.url)}>
-                    <Link to={item.url} className="flex items-center gap-3">
-                      <item.icon className="w-4 h-4" />
-                      <span>{item.title}</span>
+                  <SidebarMenuButton 
+                    asChild 
+                    isActive={isActive(item.url)}
+                    className={`
+                      group relative overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1
+                      ${isActive(item.url) 
+                        ? 'bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-500/30 shadow-lg shadow-purple-500/25 text-white ring-2 ring-purple-500/50' 
+                        : 'hover:bg-gradient-to-r hover:from-slate-700/50 hover:to-slate-600/50 hover:shadow-lg hover:shadow-slate-700/25 border border-transparent hover:border-slate-600/50'
+                      }
+                    `}
+                  >
+                    <Link to={item.url} className="flex items-center gap-3 p-3">
+                      <item.icon className={`w-5 h-5 transition-all duration-300 group-hover:scale-110 ${isActive(item.url) ? 'text-purple-300 drop-shadow-lg' : 'text-slate-300 group-hover:text-white'}`} />
+                      <span className={`font-medium transition-all duration-300 ${isActive(item.url) ? 'text-white' : 'text-slate-300 group-hover:text-white'}`}>
+                        {item.title}
+                      </span>
+                      {isActive(item.url) && (
+                        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-xl animate-pulse-neon" />
+                      )}
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -114,15 +131,32 @@ export function AppSidebar() {
         </SidebarGroup>
 
         <SidebarGroup>
-          <SidebarGroupLabel>Management</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-slate-400 text-sm font-semibold tracking-wider uppercase mb-3 px-2">
+            Management
+          </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="space-y-2">
               {managementItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={isActive(item.url)}>
-                    <Link to={item.url} className="flex items-center gap-3">
-                      <item.icon className="w-4 h-4" />
-                      <span>{item.title}</span>
+                  <SidebarMenuButton 
+                    asChild 
+                    isActive={isActive(item.url)}
+                    className={`
+                      group relative overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1
+                      ${isActive(item.url) 
+                        ? 'bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-500/30 shadow-lg shadow-purple-500/25 text-white ring-2 ring-purple-500/50' 
+                        : 'hover:bg-gradient-to-r hover:from-slate-700/50 hover:to-slate-600/50 hover:shadow-lg hover:shadow-slate-700/25 border border-transparent hover:border-slate-600/50'
+                      }
+                    `}
+                  >
+                    <Link to={item.url} className="flex items-center gap-3 p-3">
+                      <item.icon className={`w-5 h-5 transition-all duration-300 group-hover:scale-110 ${isActive(item.url) ? 'text-purple-300 drop-shadow-lg' : 'text-slate-300 group-hover:text-white'}`} />
+                      <span className={`font-medium transition-all duration-300 ${isActive(item.url) ? 'text-white' : 'text-slate-300 group-hover:text-white'}`}>
+                        {item.title}
+                      </span>
+                      {isActive(item.url) && (
+                        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-xl animate-pulse-neon" />
+                      )}
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -132,15 +166,32 @@ export function AppSidebar() {
         </SidebarGroup>
 
         <SidebarGroup>
-          <SidebarGroupLabel>Account</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-slate-400 text-sm font-semibold tracking-wider uppercase mb-3 px-2">
+            Account
+          </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="space-y-2">
               {userItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={isActive(item.url)}>
-                    <Link to={item.url} className="flex items-center gap-3">
-                      <item.icon className="w-4 h-4" />
-                      <span>{item.title}</span>
+                  <SidebarMenuButton 
+                    asChild 
+                    isActive={isActive(item.url)}
+                    className={`
+                      group relative overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1
+                      ${isActive(item.url) 
+                        ? 'bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-500/30 shadow-lg shadow-purple-500/25 text-white ring-2 ring-purple-500/50' 
+                        : 'hover:bg-gradient-to-r hover:from-slate-700/50 hover:to-slate-600/50 hover:shadow-lg hover:shadow-slate-700/25 border border-transparent hover:border-slate-600/50'
+                      }
+                    `}
+                  >
+                    <Link to={item.url} className="flex items-center gap-3 p-3">
+                      <item.icon className={`w-5 h-5 transition-all duration-300 group-hover:scale-110 ${isActive(item.url) ? 'text-purple-300 drop-shadow-lg' : 'text-slate-300 group-hover:text-white'}`} />
+                      <span className={`font-medium transition-all duration-300 ${isActive(item.url) ? 'text-white' : 'text-slate-300 group-hover:text-white'}`}>
+                        {item.title}
+                      </span>
+                      {isActive(item.url) && (
+                        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-xl animate-pulse-neon" />
+                      )}
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
