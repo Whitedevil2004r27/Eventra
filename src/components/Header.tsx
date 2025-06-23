@@ -25,8 +25,12 @@ export const Header = ({ currentState, onEventsClick, onOrdersClick }: HeaderPro
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-200">
-            <div className="w-10 h-10 bg-gradient-to-br from-festival-500 to-festival-600 rounded-xl flex items-center justify-center shadow-lg animate-pulse-glow">
-              <Ticket className="w-6 h-6 text-white" />
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg animate-pulse-glow">
+              <img 
+                src="/lovable-uploads/9c743483-e052-4914-b007-eee711f09e1d.png" 
+                alt="Eventra Logo" 
+                className="w-8 h-8 object-contain"
+              />
             </div>
             <h1 className="text-3xl font-bold gradient-text">Eventra</h1>
             <Badge variant="secondary" className="hidden sm:inline-flex bg-festival-100 dark:bg-festival-900 text-festival-700 dark:text-festival-300">
