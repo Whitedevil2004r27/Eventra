@@ -20,11 +20,11 @@ export function AppHeader() {
         <div className="flex items-center gap-4">
           <SidebarTrigger className="h-8 w-8 text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all duration-200 hover:scale-110" />
           <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-200">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center">
               <img 
-                src="/lovable-uploads/17a382f5-8267-410e-b6cf-ef2c9cda731e.png" 
+                src="/lovable-uploads/f966181f-f0e8-4f95-900d-4b7fc5198911.png" 
                 alt="Eventra Logo" 
-                className="w-6 h-6 object-contain"
+                className="w-8 h-8 object-contain"
               />
             </div>
             <h1 className="text-xl font-bold gradient-text hidden sm:block">Eventra</h1>

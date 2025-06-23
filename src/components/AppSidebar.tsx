@@ -82,11 +82,11 @@ export function AppSidebar() {
     <Sidebar className="glass-card border-0 bg-gradient-to-b from-slate-900/95 to-slate-800/95 backdrop-blur-xl shadow-2xl">
       <SidebarHeader className="border-b border-slate-700/50 p-6 bg-gradient-to-r from-slate-800/50 to-slate-700/30">
         <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-all duration-300 hover:rotate-1 group">
-          <div className="w-10 h-10 bg-gradient-to-br from-purple-500 via-blue-500 to-teal-400 rounded-xl flex items-center justify-center shadow-xl hover:shadow-purple-500/25 transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-purple-500/40 neumorphic-card p-1">
+          <div className="w-12 h-12 bg-gradient-to-br from-purple-500 via-blue-500 to-teal-400 rounded-xl flex items-center justify-center shadow-xl hover:shadow-purple-500/25 transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-purple-500/40 neumorphic-card p-1">
             <img 
-              src="/lovable-uploads/17a382f5-8267-410e-b6cf-ef2c9cda731e.png" 
+              src="/lovable-uploads/f966181f-f0e8-4f95-900d-4b7fc5198911.png" 
               alt="Eventra Logo" 
-              className="w-8 h-8 object-contain drop-shadow-lg"
+              className="w-10 h-10 object-contain drop-shadow-lg"
             />
           </div>
           <div className="flex items-center gap-2">
