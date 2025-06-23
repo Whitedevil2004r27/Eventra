@@ -22,7 +22,7 @@ export function AppHeader() {
           <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-200">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center">
               <img 
-                src="/lovable-uploads/9c743483-e052-4914-b007-eee711f09e1d.png" 
+                src="/lovable-uploads/17a382f5-8267-410e-b6cf-ef2c9cda731e.png" 
                 alt="Eventra Logo" 
                 className="w-6 h-6 object-contain"
               />

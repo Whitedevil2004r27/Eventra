@@ -84,7 +84,7 @@ export function AppSidebar() {
         <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-all duration-300 hover:rotate-1 group">
           <div className="w-10 h-10 bg-gradient-to-br from-purple-500 via-blue-500 to-teal-400 rounded-xl flex items-center justify-center shadow-xl hover:shadow-purple-500/25 transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-purple-500/40 neumorphic-card p-1">
             <img 
-              src="/lovable-uploads/9c743483-e052-4914-b007-eee711f09e1d.png" 
+              src="/lovable-uploads/17a382f5-8267-410e-b6cf-ef2c9cda731e.png" 
               alt="Eventra Logo" 
               className="w-8 h-8 object-contain drop-shadow-lg"
             />
