@@ -19,23 +19,13 @@ export function AppHeader() {
       <div className="container flex h-16 items-center px-4">
         <div className="flex items-center gap-4">
           <SidebarTrigger className="h-8 w-8 text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all duration-200 hover:scale-110" />
-          <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-200">
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center">
-              <img 
-                src="/lovable-uploads/d18f4330-158e-4e01-982e-fb861b106e0c.png" 
-                alt="Eventra Logo" 
-                className="w-8 h-8 object-contain"
-              />
-            </div>
-            <h1 className="text-xl font-bold gradient-text hidden sm:block">Eventra</h1>
-          </Link>
           <div className="hidden md:flex items-center gap-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
               <Input
                 type="search"
                 placeholder="Search events, bookings..."
-                className="pl-10 w-64 bg-slate-800/50 border-slate-600/50 text-slate-200 placeholder:text-slate-400 focus:border-blue-500/50 focus:ring-blue-500/20"
+                className="pl-10 w-64 bg-slate-800/50 border-slate-600/50 text-slate-200 placeholder:text-slate-400 focus:border-purple-500/50 focus:ring-purple-500/20"
               />
             </div>
           </div>
