@@ -22,18 +22,25 @@ export const Header = ({ currentState, onEventsClick, onOrdersClick }: HeaderPro
 
   return (
     <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg shadow-sm border-b border-festival-200 dark:border-gray-700 sticky top-0 z-50 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-200">
-            <div className="w-10 h-10 bg-gradient-to-br from-festival-500 to-festival-600 rounded-xl flex items-center justify-center shadow-lg animate-pulse-glow">
-              <Ticket className="w-6 h-6 text-white" />
-            </div>
-            <h1 className="text-3xl font-bold gradient-text">Eventra</h1>
-            <Badge variant="secondary" className="hidden sm:inline-flex bg-festival-100 dark:bg-festival-900 text-festival-700 dark:text-festival-300">
-              <Sparkles className="w-3 h-3 mr-1" />
-              Premium
-            </Badge>
-          </Link>
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-between h-16">
+      <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-200">
+        {/* Logo Image */}
+        <img
+          src="/public/eventra logo.png" // Update this path as needed
+          alt="Eventra Logo"
+          width={40}
+          height={40}
+          className="rounded-xl shadow-lg"
+        />
+        
+        {/* Title and Badge */}
+        <h1 className="text-3xl font-bold gradient-text">Eventra</h1>
+        <Badge variant="secondary" className="hidden sm:inline-flex bg-festival-100 dark:bg-festival-900 text-festival-700 dark:text-festival-300">
+          <Sparkles className="w-3 h-3 mr-1" />
+          Premium
+        </Badge>
+      </Link>
           
           <div className="flex items-center gap-4">
             <nav className="hidden md:flex items-center gap-6">

@@ -14,9 +14,9 @@ export const Footer = () => {
   ];
 
   const socialLinks = [
-    { name: 'GitHub', href: '#', icon: Github },
-    { name: 'LinkedIn', href: '#', icon: Linkedin },
-    { name: 'Twitter', href: '#', icon: Twitter },
+    { name: 'GitHub', href: 'https://github.com/Whitedevil2004r27', icon: Github },
+    { name: 'LinkedIn', href: 'https://www.linkedin.com/in/ravi-kumar-j-b29467276', icon: Linkedin },
+    { name: 'mail', href: 'mailto:ravikumarofficial227@gmail.com', icon: Twitter },
   ];
 
   return (
