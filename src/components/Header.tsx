@@ -27,7 +27,7 @@ export const Header = ({ currentState, onEventsClick, onOrdersClick }: HeaderPro
       <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-200">
         {/* Logo Image */}
         <img
-          src="/public/eventra logo.png" // Update this path as needed
+          src="/eventra logo.png" // Update this path as needed
           alt="Eventra Logo"
           width={40}
           height={40}
