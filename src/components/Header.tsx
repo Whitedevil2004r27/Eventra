@@ -22,9 +22,9 @@ export const Header = ({ currentState, onEventsClick, onOrdersClick }: HeaderPro
 
   return (
     <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg shadow-sm border-b border-festival-200 dark:border-gray-700 sticky top-0 z-50 transition-colors duration-300">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div className="max-w-30xl mx-auto px-4 sm:px-6 lg:px-8">
     <div className="flex items-center justify-between h-16">
-      <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-200">
+      <Link to="/" className="flex items-center gap-1 hover:scale-105 transition-transform duration-200">
         {/* Logo Image */}
         <img
           src="/eventra logo.png" // Update this path as needed
@@ -42,8 +42,8 @@ export const Header = ({ currentState, onEventsClick, onOrdersClick }: HeaderPro
         </Badge>
       </Link>
           
-          <div className="flex items-center gap-4">
-            <nav className="hidden md:flex items-center gap-6">
+          <div className="flex items-center gap">
+            <nav className="hidden md:flex items-center gap">
               <Link to="/">
                 <Button
                   variant={isActive('/') ? 'default' : 'ghost'}
